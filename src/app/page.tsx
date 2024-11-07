@@ -1,101 +1,200 @@
+"use client";
+
+import AiButton from "@/components/animata/button/ai-button";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  MessageCircle,
+  PenLine,
+  Sparkle,
+  Target,
+  User,
+  Users,
+} from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
-export default function Home() {
+export default function LandingPage() {
+  const [showConversation, setShowConversation] = useState(false);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="border-b">
+        <div className="container px-4 py-4">
+          <div className="flex items-center gap-2">
+            <Image src="/logo.svg" alt="Logo" width={32} height={32} />
+            <span className="text-lg text-gray-600 font-bold">
+              StrategyConnect
+            </span>
+          </div>
+        </div>
+      </header>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Main Content */}
+      <main className="container px-4 py-12">
+        <>
+          {/* Welcome Section */}
+          <div className="mb-16 text-center">
+            <div className="mb-2 flex justify-center">
+              <MessageCircle className="h-12 w-12 text-blue-800 mr-3" />
+              <h1 className="bg-gradient-to-r from-blue-900 to-blue-500 bg-clip-text text-4xl font-extrabold text-transparent sm:text-5xl">
+                Hey, Welcome!
+              </h1>
+            </div>
+            <p className="text-2xl font-extrabold text-gray-500 sm:text-3xl">
+              Marvin AI quickly scopes out your project.
+            </p>
+          </div>
+
+          {/* Process Steps */}
+          <div className="grid gap-8 px-12 grid-cols-1 w-full sm:grid-cols-2 lg:grid-cols-3">
+            {/* Describe Project */}
+            <Card className="p-6 shadow-lg flex flex-col items-center justify-center hover:shadow-xl">
+              <div className="mb-4">
+                <PenLine className="h-6 w-6 text-cyan-500" />
+              </div>
+              <h2 className="mb-2 text-xl font-bold text-blue-900">
+                Describe Your Project
+              </h2>
+              <p className="mb-6 text-sm text-gray-500">
+                Briefly share your strategic needs and business context.
+              </p>
+              <Input
+                placeholder="Tell me your project needs briefly."
+                className="mb-4"
+              />
+              <div className="space-y-3">
+                <p className="text-xs text-gray-800">Example Prompts:</p>
+                <div className="space-y-2 text-xs text-gray-500">
+                  <p>
+                    I am a local bank in Nigeria, looking to digitalise my
+                    processes and operations.
+                  </p>
+                  <p>
+                    I am a food and beverage company based in UAE and I want to
+                    optimise my e-retail operations to increase my digital
+                    footprint.
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            {/* Scope Project */}
+            <Card className="p-6 shadow-lg flex flex-col items-center justify-center hover:shadow-xl">
+              <div className="mb-4">
+                <Target className="h-6 w-6 text-cyan-500" />
+              </div>
+              <h2 className="mb-2 text-xl font-bold text-blue-900">
+                Scope out Project
+              </h2>
+              <p className="mb-6 text-sm text-gray-500">
+                Review and refine your project scope, expertly crafted by
+                Marvin.
+              </p>
+              <div className="rounded-lg bg-gray-50 p-4">
+                <h3 className="mb-2 font-medium text-blue-900">
+                  Market Opportunity Assessment
+                </h3>
+                <p className="text-sm text-gray-500">
+                  20 Relevant projects done by StrategyConnect
+                </p>
+                <div className="mt-4 flex items-center justify-center">
+                  <div className="text-6xl font-bold text-blue-200">1</div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Team & Budget */}
+            <Card className="p-6 shadow-lg flex flex-col items-center justify-center hover:shadow-xl">
+              <div className="mb-4">
+                <Users className="h-6 w-6 text-cyan-500" />
+              </div>
+              <h2 className="mb-2 text-xl font-bold text-blue-900">
+                Get Your Team & Budget
+              </h2>
+              <p className="mb-6 text-sm text-gray-500">
+                Start with confidence as Marvin assembles your dream team and
+                estimate budget
+              </p>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium">
+                    Team Structure & Pricing
+                  </span>
+                  <span className="text-xs text-gray-400">+</span>
+                </div>
+                <div className="flex justify-between gap-4">
+                  <div className="h-12 w-12 grid place-items-center rounded-full bg-gray-100" />
+                  <div className="h-12 w-12 grid place-items-center rounded-full bg-gray-100">
+                    <User className="h-1/2 w-1/2 text-gray-500" />
+                  </div>
+                </div>
+                <div className="flex items-center justify-between border-t pt-4">
+                  <span className="text-sm text-gray-500">
+                    Estimated Pricing For X Months
+                  </span>
+                  <span className="font-medium text-blue-900">
+                    $20,600 - $30,000
+                  </span>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </>
+
+        {/* CTA Button */}
+        <div className="mt-3 flex justify-center">
+          <AiButton />
+        </div>
+
+        {/* Footer Text */}
+        <div className="mt-2 flex-col flex items-center">
+          <p className="text-center text-sm text-gray-400 max-w-xl">
+            Share your project vision, and let AI transform it into a detailed
+            plan, including scope, team, and budget.
+          </p>
+          <hr className="my-4 border-gray-200 w-1/2" />
+          <p className="text-center text-sm text-gray-400 max-w-xl">
+            Have a project scope? Looking to connect with our talent pool?{" "}
+            <span className="text-blue-900">Book a call now!</span>
+          </p>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+      <div className="mx-auto max-w-5xl flex min-h-screen flex-col items-center justify-center">
+        <div className="mb-16 space-y-8">
+          <div className="flex items-center gap-4">
+            <MessageCircle className="h-12 w-12 text-blue-900" />
+            <div>
+              <h2 className="bg-gradient-to-r from-blue-900 to-blue-500 bg-clip-text text-5xl font-extrabold text-transparent">
+                Hey, I'm Marvin
+              </h2>
+              <p className="text-3xl font-bold text-gray-500">
+                Let's hear from you!
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-4 font-semibold">
+            <p className="text-3xl text-gray-400 leading-relaxed">
+              We're in{" "}
+              <span className="text-blue-900 underline">education</span>{" "}
+              industry based out of{" "}
+              <span className="text-blue-900 underline">noida</span> and we need{" "}
+              <span className="text-blue-900 underline">
+                create some good products
+              </span>
+            </p>
+
+            <Button className="bg-gradient-to-r from-blue-900 to-blue-500 text-white group">
+              Generate Scope{" "}
+              <Sparkle className="ml-2 h-4 w-4 group-hover:animate-bounce" />
+            </Button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
