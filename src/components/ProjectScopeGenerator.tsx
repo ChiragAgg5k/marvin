@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Loader2, Sparkle } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ThinkingAnimation from "./ThinkingAnimation";
 
 async function fetchAIResponse(prompt: string): Promise<any> {
   try {
@@ -46,6 +47,42 @@ async function fetchAIResponse(prompt: string): Promise<any> {
   }
 }
 
+const AnimatedText = ({
+  text,
+  isVisible,
+}: {
+  text: string;
+  delay: number;
+  isVisible: boolean;
+}) => {
+  const [displayedText, setDisplayedText] = useState("");
+
+  useEffect(() => {
+    if (!isVisible) {
+      setDisplayedText("");
+      return;
+    }
+
+    let currentText = "";
+    const textArray = text.split("");
+    let currentIndex = 0;
+
+    const interval = setInterval(() => {
+      if (currentIndex < textArray.length) {
+        currentText += textArray[currentIndex];
+        setDisplayedText(currentText);
+        currentIndex++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 20); // Adjust typing speed here
+
+    return () => clearInterval(interval);
+  }, [text, isVisible]);
+
+  return <span className="inline-block">{displayedText}</span>;
+};
+
 const ProjectScopeGenerator = ({
   sector,
   location,
@@ -56,8 +93,9 @@ const ProjectScopeGenerator = ({
   requiredScope: string;
 }) => {
   const [scopeData, setScopeData] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [visibleComponents, setVisibleComponents] = useState<number[]>([]);
 
   const generatePrompt = () => {
     return `Generate a comprehensive project scope for a {sector} company located in {location}. The company is a {size} organization targeting {audience} and faces challenges such as {challenges}. The project aims to {requiredScope}. 
@@ -82,10 +120,29 @@ const ProjectScopeGenerator = ({
   const generateScope = async () => {
     setLoading(true);
     setError(null);
+    setVisibleComponents([]);
 
     try {
-      const data = await fetchAIResponse(generatePrompt());
+      window.scrollTo({
+        top: window.scrollY + window.innerHeight,
+        behavior: "smooth",
+      });
+
+      const [data] = await Promise.all([
+        fetchAIResponse(generatePrompt()),
+        new Promise((resolve) => setTimeout(resolve, 5000)),
+      ]);
+
       setScopeData(data);
+
+      // Stagger the appearance of components
+      if (data && data.components) {
+        data.components.forEach((_: any, index: number) => {
+          setTimeout(() => {
+            setVisibleComponents((prev) => [...prev, index]);
+          }, index * 1000); // 1 second delay between each component
+        });
+      }
     } catch (err) {
       setError("Failed to generate scope. Please try again.");
       console.error("Error:", err);
@@ -111,26 +168,56 @@ const ProjectScopeGenerator = ({
 
       {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
 
+      <ThinkingAnimation loading={loading} />
+
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
         {scopeData &&
           scopeData.components.map((component: any, index: number) => (
             <Card
               key={index}
-              className="p-6 shadow-lg hover:shadow-xl transition-shadow"
+              className={`p-6 shadow-lg hover:shadow-xl transition-all duration-500 ${
+                visibleComponents.includes(index)
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-4"
+              }`}
             >
               <div className="flex flex-col items-start mb-4">
                 <h2 className="text-xl font-bold text-blue-900">
-                  {component.title}
+                  <AnimatedText
+                    text={component.title}
+                    delay={index * 1000}
+                    isVisible={visibleComponents.includes(index)}
+                  />
                 </h2>
                 <p className="text-sm text-muted-foreground font-light">
-                  {component.overview}
+                  <AnimatedText
+                    text={component.overview}
+                    delay={index * 1000 + 500}
+                    isVisible={visibleComponents.includes(index)}
+                  />
                 </p>
               </div>
               <div className="space-y-3 text-gray-600">
                 {component.items.map((item: any, itemIndex: number) => (
-                  <div key={itemIndex} className="flex items-start">
+                  <div
+                    key={itemIndex}
+                    className={`flex items-start transition-all duration-500 ${
+                      visibleComponents.includes(index)
+                        ? "opacity-100 translate-x-0"
+                        : "opacity-0 -translate-x-4"
+                    }`}
+                    style={{
+                      transitionDelay: `${itemIndex * 200}ms`,
+                    }}
+                  >
                     <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 mr-2 flex-shrink-0" />
-                    <p className="text-sm">{item}</p>
+                    <p className="text-sm">
+                      <AnimatedText
+                        text={item}
+                        delay={index * 1000 + itemIndex * 200}
+                        isVisible={visibleComponents.includes(index)}
+                      />
+                    </p>
                   </div>
                 ))}
               </div>

@@ -14,9 +14,14 @@ const config: Config = {
           "0%, 100%": { opacity: "0.75", scale: "0.9" },
           "50%": { opacity: "1", scale: "1" },
         },
+        fadeIn: {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
       },
       animation: {
         sparkle: "sparkle 2s ease-in-out infinite",
+        fade: "fadeIn .5s ease-in-out",
       },
       colors: {
         background: "hsl(var(--background))",
