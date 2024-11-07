@@ -118,7 +118,7 @@ const options: ISourceOptions = {
 export default function AiButton({
   setShowConversation,
 }: {
-  setShowConversation: any;
+  setShowConversation: (showConversation: boolean) => void;
 }) {
   const [particleState, setParticlesReady] = useState<"loaded" | "ready">();
   const [isHovering, setIsHovering] = useState(false);

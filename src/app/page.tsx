@@ -173,17 +173,17 @@ export default function LandingPage() {
               <MessageCircle className="h-12 w-12 text-blue-900" />
               <div>
                 <h2 className="bg-gradient-to-r from-blue-900 to-blue-500 bg-clip-text text-5xl font-extrabold text-transparent">
-                  Hey, I'm Marvin
+                  {"Hey, I'm Marvin"}
                 </h2>
                 <p className="text-3xl font-bold text-gray-500">
-                  Let's hear from you!
+                  {"Let's hear from you!"}
                 </p>
               </div>
             </div>
 
             <div className="space-y-4 font-semibold">
               <p className="text-3xl text-gray-500 leading-relaxed">
-                We're in{" "}
+                {"We're in"}{" "}
                 <input
                   value={sector}
                   onChange={(e) => setSector(e.target.value)}
