@@ -115,7 +115,11 @@ const options: ISourceOptions = {
   ],
 };
 
-export default function AiButton() {
+export default function AiButton({
+  setShowConversation,
+}: {
+  setShowConversation: any;
+}) {
   const [particleState, setParticlesReady] = useState<"loaded" | "ready">();
   const [isHovering, setIsHovering] = useState(false);
 
@@ -137,6 +141,13 @@ export default function AiButton() {
       className="group relative my-8 rounded bg-gradient-to-r from-blue-300/40 via-blue-500/40 via-40% to-blue-800/40 p-1 text-white transition-transform hover:scale-110 active:scale-105"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
+      onClick={() => {
+        setShowConversation(true);
+        window.scrollTo({
+          top: window.scrollY + window.innerHeight,
+          behavior: "smooth",
+        });
+      }}
     >
       <div className="relative flex items-center justify-center gap-2 rounded bg-gradient-to-r from-blue-300 via-blue-500 via-40% to-blue-800 px-4 py-2 text-white">
         <Sparkle className="size-6 -translate-y-0.5 animate-sparkle fill-white" />

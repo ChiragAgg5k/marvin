@@ -17,6 +17,9 @@ import { useState } from "react";
 
 export default function LandingPage() {
   const [showConversation, setShowConversation] = useState(false);
+  const [sector, setSector] = useState<string>("");
+  const [location, setLocation] = useState<string>("");
+  const [requiredScope, setRequiredScope] = useState<string>("");
 
   return (
     <div className="min-h-screen bg-white">
@@ -146,7 +149,7 @@ export default function LandingPage() {
 
         {/* CTA Button */}
         <div className="mt-3 flex justify-center">
-          <AiButton />
+          <AiButton setShowConversation={setShowConversation} />
         </div>
 
         {/* Footer Text */}
@@ -163,38 +166,54 @@ export default function LandingPage() {
         </div>
       </main>
 
-      <div className="mx-auto max-w-5xl flex min-h-screen flex-col items-center justify-center">
-        <div className="mb-16 space-y-8">
-          <div className="flex items-center gap-4">
-            <MessageCircle className="h-12 w-12 text-blue-900" />
-            <div>
-              <h2 className="bg-gradient-to-r from-blue-900 to-blue-500 bg-clip-text text-5xl font-extrabold text-transparent">
-                Hey, I'm Marvin
-              </h2>
-              <p className="text-3xl font-bold text-gray-500">
-                Let's hear from you!
+      {showConversation && (
+        <div className="mx-auto max-w-5xl flex min-h-screen flex-col items-center justify-center">
+          <div className="mb-16 space-y-8">
+            <div className="flex items-center gap-4">
+              <MessageCircle className="h-12 w-12 text-blue-900" />
+              <div>
+                <h2 className="bg-gradient-to-r from-blue-900 to-blue-500 bg-clip-text text-5xl font-extrabold text-transparent">
+                  Hey, I'm Marvin
+                </h2>
+                <p className="text-3xl font-bold text-gray-500">
+                  Let's hear from you!
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-4 font-semibold">
+              <p className="text-3xl text-gray-500 leading-relaxed">
+                We're in{" "}
+                <input
+                  value={sector}
+                  onChange={(e) => setSector(e.target.value)}
+                  className="inline-block border-b border-blue-900 focus:outline-none"
+                  placeholder="education"
+                />{" "}
+                industry based out of{" "}
+                <input
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  className="inline-block border-b border-blue-900 focus:outline-none"
+                  placeholder="noida"
+                />{" "}
+                and we need{" "}
+                <input
+                  value={requiredScope}
+                  onChange={(e) => setRequiredScope(e.target.value)}
+                  className="inline-block w-full border-b border-blue-900 focus:outline-none"
+                  placeholder="attract more small to medium sized businesses for growth."
+                />
               </p>
+
+              <Button className="bg-gradient-to-r from-blue-900 to-blue-500 text-white group">
+                Generate Scope{" "}
+                <Sparkle className="ml-2 h-4 w-4 group-hover:animate-bounce" />
+              </Button>
             </div>
           </div>
-
-          <div className="space-y-4 font-semibold">
-            <p className="text-3xl text-gray-400 leading-relaxed">
-              We're in{" "}
-              <span className="text-blue-900 underline">education</span>{" "}
-              industry based out of{" "}
-              <span className="text-blue-900 underline">noida</span> and we need{" "}
-              <span className="text-blue-900 underline">
-                create some good products
-              </span>
-            </p>
-
-            <Button className="bg-gradient-to-r from-blue-900 to-blue-500 text-white group">
-              Generate Scope{" "}
-              <Sparkle className="ml-2 h-4 w-4 group-hover:animate-bounce" />
-            </Button>
-          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
