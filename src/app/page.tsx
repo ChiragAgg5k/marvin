@@ -1,17 +1,10 @@
 "use client";
 
 import AiButton from "@/components/animata/button/ai-button";
-import { Button } from "@/components/ui/button";
+import ProjectScopeGenerator from "@/components/ProjectScopeGenerator";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-  MessageCircle,
-  PenLine,
-  Sparkle,
-  Target,
-  User,
-  Users,
-} from "lucide-react";
+import { MessageCircle, PenLine, Target, User, Users } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -36,7 +29,7 @@ export default function LandingPage() {
       </header>
 
       {/* Main Content */}
-      <main className="container px-4 py-12">
+      <main className="w-full px-4 py-12">
         <>
           {/* Welcome Section */}
           <div className="mb-16 text-center">
@@ -52,7 +45,7 @@ export default function LandingPage() {
           </div>
 
           {/* Process Steps */}
-          <div className="grid gap-8 px-12 grid-cols-1 w-full sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8 px-12 grid-cols-1 w-full md:grid-cols-3">
             {/* Describe Project */}
             <Card className="p-6 shadow-lg flex flex-col items-center justify-center hover:shadow-xl">
               <div className="mb-4">
@@ -167,7 +160,7 @@ export default function LandingPage() {
       </main>
 
       {showConversation && (
-        <div className="mx-auto max-w-5xl flex min-h-screen flex-col items-center justify-center">
+        <div className="mx-auto px-8 max-w-5xl flex min-h-screen flex-col items-center justify-center">
           <div className="mb-16 space-y-8">
             <div className="flex items-center gap-4">
               <MessageCircle className="h-12 w-12 text-blue-900" />
@@ -206,10 +199,11 @@ export default function LandingPage() {
                 />
               </p>
 
-              <Button className="bg-gradient-to-r from-blue-900 to-blue-500 text-white group">
-                Generate Scope{" "}
-                <Sparkle className="ml-2 h-4 w-4 group-hover:animate-bounce" />
-              </Button>
+              <ProjectScopeGenerator
+                sector={sector}
+                location={location}
+                requiredScope={requiredScope}
+              />
             </div>
           </div>
         </div>
